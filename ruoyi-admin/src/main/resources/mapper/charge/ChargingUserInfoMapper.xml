@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingUserInfoMapper">
+    
+    <resultMap type="ChargingUserInfo" id="ChargingUserInfoResult">
+        <result property="id"    column="id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="occupation"    column="occupation"    />
+        <result property="userAccount"    column="user_account"    />
+        <result property="pasword"    column="pasword"    />
+    </resultMap>
+
+    <sql id="selectChargingUserInfoVo">
+        select id, user_name, gender, age, occupation, user_account, pasword from charging_user_info
+    </sql>
+
+    <select id="selectChargingUserInfoList" parameterType="ChargingUserInfo" resultMap="ChargingUserInfoResult">
+        <include refid="selectChargingUserInfoVo"/>
+        <where>  
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="occupation != null  and occupation != ''"> and occupation = #{occupation}</if>
+            <if test="userAccount != null  and userAccount != ''"> and user_account = #{userAccount}</if>
+            <if test="pasword != null  and pasword != ''"> and pasword = #{pasword}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingUserInfoById" parameterType="Integer" resultMap="ChargingUserInfoResult">
+        <include refid="selectChargingUserInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChargingUserInfo" parameterType="ChargingUserInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null">user_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="occupation != null">occupation,</if>
+            <if test="userAccount != null">user_account,</if>
+            <if test="pasword != null">pasword,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userName != null">#{userName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="occupation != null">#{occupation},</if>
+            <if test="userAccount != null">#{userAccount},</if>
+            <if test="pasword != null">#{pasword},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingUserInfo" parameterType="ChargingUserInfo">
+        update charging_user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="occupation != null">occupation = #{occupation},</if>
+            <if test="userAccount != null">user_account = #{userAccount},</if>
+            <if test="pasword != null">pasword = #{pasword},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChargingUserInfoById" parameterType="Integer">
+        delete from charging_user_info where id = #{id}
+    </delete>
+
+    <delete id="deleteChargingUserInfoByIds" parameterType="String">
+        delete from charging_user_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingPileInfoMapper">
+    
+    <resultMap type="ChargingPileInfo" id="ChargingPileInfoResult">
+        <result property="id"    column="id"    />
+        <result property="pileNumber"    column="pile_number"    />
+        <result property="pileName"    column="pile_name"    />
+        <result property="gunInfos"    column="gun_infos"    />
+        <result property="power"    column="power"    />
+        <result property="pileType"    column="pile_type"    />
+        <result property="pileModel"    column="pile_model"    />
+        <result property="protocol"    column="protocol"    />
+        <result property="network"    column="network"    />
+        <result property="pileLng"    column="pile_lng"    />
+        <result property="pileLat"    column="pile_lat"    />
+        <result property="stationId"    column="station_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectChargingPileInfoVo">
+        select id, pile_number, pile_name, gun_infos, power, pile_type, pile_model, protocol, network, pile_lng, pile_lat, station_id, create_time from charging_pile_info
+    </sql>
+
+    <select id="selectChargingPileInfoList" parameterType="ChargingPileInfo" resultMap="ChargingPileInfoResult">
+        <include refid="selectChargingPileInfoVo"/>
+        <where>  
+            <if test="pileNumber != null  and pileNumber != ''"> and pile_number = #{pileNumber}</if>
+            <if test="pileName != null  and pileName != ''"> and pile_name like concat('%', #{pileName}, '%')</if>
+            <if test="gunInfos != null  and gunInfos != ''"> and gun_infos = #{gunInfos}</if>
+            <if test="power != null "> and power = #{power}</if>
+            <if test="pileType != null "> and pile_type = #{pileType}</if>
+            <if test="pileModel != null "> and pile_model = #{pileModel}</if>
+            <if test="protocol != null "> and protocol = #{protocol}</if>
+            <if test="network != null "> and network = #{network}</if>
+            <if test="pileLng != null "> and pile_lng = #{pileLng}</if>
+            <if test="pileLat != null "> and pile_lat = #{pileLat}</if>
+            <if test="stationId != null "> and station_id = #{stationId}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingPileInfoById" parameterType="Integer" resultMap="ChargingPileInfoResult">
+        <include refid="selectChargingPileInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChargingPileInfo" parameterType="ChargingPileInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_pile_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pileNumber != null and pileNumber != ''">pile_number,</if>
+            <if test="pileName != null">pile_name,</if>
+            <if test="gunInfos != null">gun_infos,</if>
+            <if test="power != null">power,</if>
+            <if test="pileType != null">pile_type,</if>
+            <if test="pileModel != null">pile_model,</if>
+            <if test="protocol != null">protocol,</if>
+            <if test="network != null">network,</if>
+            <if test="pileLng != null">pile_lng,</if>
+            <if test="pileLat != null">pile_lat,</if>
+            <if test="stationId != null">station_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pileNumber != null and pileNumber != ''">#{pileNumber},</if>
+            <if test="pileName != null">#{pileName},</if>
+            <if test="gunInfos != null">#{gunInfos},</if>
+            <if test="power != null">#{power},</if>
+            <if test="pileType != null">#{pileType},</if>
+            <if test="pileModel != null">#{pileModel},</if>
+            <if test="protocol != null">#{protocol},</if>
+            <if test="network != null">#{network},</if>
+            <if test="pileLng != null">#{pileLng},</if>
+            <if test="pileLat != null">#{pileLat},</if>
+            <if test="stationId != null">#{stationId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingPileInfo" parameterType="ChargingPileInfo">
+        update charging_pile_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pileNumber != null and pileNumber != ''">pile_number = #{pileNumber},</if>
+            <if test="pileName != null">pile_name = #{pileName},</if>
+            <if test="gunInfos != null">gun_infos = #{gunInfos},</if>
+            <if test="power != null">power = #{power},</if>
+            <if test="pileType != null">pile_type = #{pileType},</if>
+            <if test="pileModel != null">pile_model = #{pileModel},</if>
+            <if test="protocol != null">protocol = #{protocol},</if>
+            <if test="network != null">network = #{network},</if>
+            <if test="pileLng != null">pile_lng = #{pileLng},</if>
+            <if test="pileLat != null">pile_lat = #{pileLat},</if>
+            <if test="stationId != null">station_id = #{stationId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChargingPileInfoById" parameterType="Integer">
+        delete from charging_pile_info where id = #{id}
+    </delete>
+
+    <delete id="deleteChargingPileInfoByIds" parameterType="String">
+        delete from charging_pile_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

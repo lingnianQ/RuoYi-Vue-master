@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingGunInfoMapper">
+    
+    <resultMap type="ChargingGunInfo" id="ChargingGunInfoResult">
+        <result property="id"    column="id"    />
+        <result property="gunNumber"    column="gun_number"    />
+        <result property="gunName"    column="gun_name"    />
+        <result property="power"    column="power"    />
+        <result property="electricity"    column="electricity"    />
+        <result property="voltageUpperLimits"    column="voltage_upper_limits"    />
+        <result property="voltageLowerLimits"    column="voltage_lower_limits"    />
+        <result property="gunType"    column="gun_type"    />
+        <result property="pileId"    column="pile_id"    />
+        <result property="gunStatus"    column="gun_status"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectChargingGunInfoVo">
+        select id, gun_number, gun_name, power, electricity, voltage_upper_limits, voltage_lower_limits, gun_type, pile_id, gun_status, create_time from charging_gun_info
+    </sql>
+
+    <select id="selectChargingGunInfoList" parameterType="ChargingGunInfo" resultMap="ChargingGunInfoResult">
+        <include refid="selectChargingGunInfoVo"/>
+        <where>  
+            <if test="gunNumber != null  and gunNumber != ''"> and gun_number = #{gunNumber}</if>
+            <if test="gunName != null  and gunName != ''"> and gun_name like concat('%', #{gunName}, '%')</if>
+            <if test="power != null "> and power = #{power}</if>
+            <if test="electricity != null "> and electricity = #{electricity}</if>
+            <if test="voltageUpperLimits != null "> and voltage_upper_limits = #{voltageUpperLimits}</if>
+            <if test="voltageLowerLimits != null "> and voltage_lower_limits = #{voltageLowerLimits}</if>
+            <if test="gunType != null "> and gun_type = #{gunType}</if>
+            <if test="pileId != null "> and pile_id = #{pileId}</if>
+            <if test="gunStatus != null "> and gun_status = #{gunStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingGunInfoById" parameterType="Long" resultMap="ChargingGunInfoResult">
+        <include refid="selectChargingGunInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChargingGunInfo" parameterType="ChargingGunInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_gun_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gunNumber != null and gunNumber != ''">gun_number,</if>
+            <if test="gunName != null">gun_name,</if>
+            <if test="power != null">power,</if>
+            <if test="electricity != null">electricity,</if>
+            <if test="voltageUpperLimits != null">voltage_upper_limits,</if>
+            <if test="voltageLowerLimits != null">voltage_lower_limits,</if>
+            <if test="gunType != null">gun_type,</if>
+            <if test="pileId != null">pile_id,</if>
+            <if test="gunStatus != null">gun_status,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gunNumber != null and gunNumber != ''">#{gunNumber},</if>
+            <if test="gunName != null">#{gunName},</if>
+            <if test="power != null">#{power},</if>
+            <if test="electricity != null">#{electricity},</if>
+            <if test="voltageUpperLimits != null">#{voltageUpperLimits},</if>
+            <if test="voltageLowerLimits != null">#{voltageLowerLimits},</if>
+            <if test="gunType != null">#{gunType},</if>
+            <if test="pileId != null">#{pileId},</if>
+            <if test="gunStatus != null">#{gunStatus},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingGunInfo" parameterType="ChargingGunInfo">
+        update charging_gun_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gunNumber != null and gunNumber != ''">gun_number = #{gunNumber},</if>
+            <if test="gunName != null">gun_name = #{gunName},</if>
+            <if test="power != null">power = #{power},</if>
+            <if test="electricity != null">electricity = #{electricity},</if>
+            <if test="voltageUpperLimits != null">voltage_upper_limits = #{voltageUpperLimits},</if>
+            <if test="voltageLowerLimits != null">voltage_lower_limits = #{voltageLowerLimits},</if>
+            <if test="gunType != null">gun_type = #{gunType},</if>
+            <if test="pileId != null">pile_id = #{pileId},</if>
+            <if test="gunStatus != null">gun_status = #{gunStatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChargingGunInfoById" parameterType="Long">
+        delete from charging_gun_info where id = #{id}
+    </delete>
+
+    <delete id="deleteChargingGunInfoByIds" parameterType="String">
+        delete from charging_gun_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

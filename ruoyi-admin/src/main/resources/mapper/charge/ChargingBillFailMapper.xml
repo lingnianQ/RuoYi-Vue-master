@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingBillFailMapper">
+    
+    <resultMap type="ChargingBillFail" id="ChargingBillFailResult">
+        <result property="id"    column="Id"    />
+        <result property="billNumber"    column="bill_number"    />
+        <result property="userId"    column="user_id"    />
+        <result property="operatorId"    column="operator_id"    />
+        <result property="stationId"    column="station_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="orderCreateTime"    column="order_create_time"    />
+    </resultMap>
+
+    <sql id="selectChargingBillFailVo">
+        select Id, bill_number, user_id, operator_id, station_id, device_id, order_create_time from charging_bill_fail
+    </sql>
+
+    <select id="selectChargingBillFailList" parameterType="ChargingBillFail" resultMap="ChargingBillFailResult">
+        <include refid="selectChargingBillFailVo"/>
+        <where>  
+            <if test="billNumber != null  and billNumber != ''"> and bill_number = #{billNumber}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="operatorId != null "> and operator_id = #{operatorId}</if>
+            <if test="stationId != null "> and station_id = #{stationId}</if>
+            <if test="deviceId != null "> and device_id = #{deviceId}</if>
+            <if test="orderCreateTime != null "> and order_create_time = #{orderCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingBillFailById" parameterType="Integer" resultMap="ChargingBillFailResult">
+        <include refid="selectChargingBillFailVo"/>
+        where Id = #{id}
+    </select>
+        
+    <insert id="insertChargingBillFail" parameterType="ChargingBillFail" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_bill_fail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billNumber != null and billNumber != ''">bill_number,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="operatorId != null">operator_id,</if>
+            <if test="stationId != null">station_id,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="orderCreateTime != null">order_create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="billNumber != null and billNumber != ''">#{billNumber},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            <if test="stationId != null">#{stationId},</if>
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="orderCreateTime != null">#{orderCreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingBillFail" parameterType="ChargingBillFail">
+        update charging_bill_fail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billNumber != null and billNumber != ''">bill_number = #{billNumber},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="operatorId != null">operator_id = #{operatorId},</if>
+            <if test="stationId != null">station_id = #{stationId},</if>
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="orderCreateTime != null">order_create_time = #{orderCreateTime},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteChargingBillFailById" parameterType="Integer">
+        delete from charging_bill_fail where Id = #{id}
+    </delete>
+
+    <delete id="deleteChargingBillFailByIds" parameterType="String">
+        delete from charging_bill_fail where Id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

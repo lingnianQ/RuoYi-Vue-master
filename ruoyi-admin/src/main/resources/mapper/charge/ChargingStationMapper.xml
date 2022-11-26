@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingStationMapper">
+    
+    <resultMap type="ChargingStation" id="ChargingStationResult">
+        <result property="id"    column="id"    />
+        <result property="stationCode"    column="station_code"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="deviceNumber"    column="device_number"    />
+        <result property="acGunNumber"    column="ac_gun_number"    />
+        <result property="dcGunNumber"    column="dc_gun_number"    />
+        <result property="acRatePower"    column="ac_rate_power"    />
+        <result property="dcRatePower"    column="dc_rate_power"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="address"    column="address"    />
+        <result property="stationLng"    column="station_lng"    />
+        <result property="stationLat"    column="station_lat"    />
+        <result property="devicePower"    column="device_power"    />
+        <result property="stationModel"    column="station_model"    />
+        <result property="stationStatus"    column="station_status"    />
+        <result property="stationType"    column="station_type"    />
+        <result property="stationModified"    column="station_modified"    />
+        <result property="stationCreate"    column="station_create"    />
+        <result property="operatorId"    column="operator_id"    />
+        <result property="parkFee"    column="park_fee"    />
+    </resultMap>
+
+    <sql id="selectChargingStationVo">
+        select id, station_code, station_name, device_number, ac_gun_number, dc_gun_number, ac_rate_power, dc_rate_power, province, city, address, station_lng, station_lat, device_power, station_model, station_status, station_type, station_modified, station_create, operator_id, park_fee from charging_station
+    </sql>
+
+    <select id="selectChargingStationList" parameterType="ChargingStation" resultMap="ChargingStationResult">
+        <include refid="selectChargingStationVo"/>
+        <where>  
+            <if test="stationCode != null  and stationCode != ''"> and station_code = #{stationCode}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="deviceNumber != null "> and device_number = #{deviceNumber}</if>
+            <if test="acGunNumber != null "> and ac_gun_number = #{acGunNumber}</if>
+            <if test="dcGunNumber != null "> and dc_gun_number = #{dcGunNumber}</if>
+            <if test="acRatePower != null "> and ac_rate_power = #{acRatePower}</if>
+            <if test="dcRatePower != null "> and dc_rate_power = #{dcRatePower}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="stationLng != null "> and station_lng = #{stationLng}</if>
+            <if test="stationLat != null "> and station_lat = #{stationLat}</if>
+            <if test="devicePower != null "> and device_power = #{devicePower}</if>
+            <if test="stationModel != null "> and station_model = #{stationModel}</if>
+            <if test="stationStatus != null "> and station_status = #{stationStatus}</if>
+            <if test="stationType != null "> and station_type = #{stationType}</if>
+            <if test="stationModified != null "> and station_modified = #{stationModified}</if>
+            <if test="stationCreate != null "> and station_create = #{stationCreate}</if>
+            <if test="operatorId != null "> and operator_id = #{operatorId}</if>
+            <if test="parkFee != null "> and park_fee = #{parkFee}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingStationById" parameterType="Integer" resultMap="ChargingStationResult">
+        <include refid="selectChargingStationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChargingStation" parameterType="ChargingStation" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_station
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationCode != null and stationCode != ''">station_code,</if>
+            <if test="stationName != null">station_name,</if>
+            <if test="deviceNumber != null">device_number,</if>
+            <if test="acGunNumber != null">ac_gun_number,</if>
+            <if test="dcGunNumber != null">dc_gun_number,</if>
+            <if test="acRatePower != null">ac_rate_power,</if>
+            <if test="dcRatePower != null">dc_rate_power,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="address != null">address,</if>
+            <if test="stationLng != null">station_lng,</if>
+            <if test="stationLat != null">station_lat,</if>
+            <if test="devicePower != null">device_power,</if>
+            <if test="stationModel != null">station_model,</if>
+            <if test="stationStatus != null">station_status,</if>
+            <if test="stationType != null">station_type,</if>
+            <if test="stationModified != null">station_modified,</if>
+            <if test="stationCreate != null">station_create,</if>
+            <if test="operatorId != null">operator_id,</if>
+            <if test="parkFee != null">park_fee,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationCode != null and stationCode != ''">#{stationCode},</if>
+            <if test="stationName != null">#{stationName},</if>
+            <if test="deviceNumber != null">#{deviceNumber},</if>
+            <if test="acGunNumber != null">#{acGunNumber},</if>
+            <if test="dcGunNumber != null">#{dcGunNumber},</if>
+            <if test="acRatePower != null">#{acRatePower},</if>
+            <if test="dcRatePower != null">#{dcRatePower},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="address != null">#{address},</if>
+            <if test="stationLng != null">#{stationLng},</if>
+            <if test="stationLat != null">#{stationLat},</if>
+            <if test="devicePower != null">#{devicePower},</if>
+            <if test="stationModel != null">#{stationModel},</if>
+            <if test="stationStatus != null">#{stationStatus},</if>
+            <if test="stationType != null">#{stationType},</if>
+            <if test="stationModified != null">#{stationModified},</if>
+            <if test="stationCreate != null">#{stationCreate},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            <if test="parkFee != null">#{parkFee},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingStation" parameterType="ChargingStation">
+        update charging_station
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationCode != null and stationCode != ''">station_code = #{stationCode},</if>
+            <if test="stationName != null">station_name = #{stationName},</if>
+            <if test="deviceNumber != null">device_number = #{deviceNumber},</if>
+            <if test="acGunNumber != null">ac_gun_number = #{acGunNumber},</if>
+            <if test="dcGunNumber != null">dc_gun_number = #{dcGunNumber},</if>
+            <if test="acRatePower != null">ac_rate_power = #{acRatePower},</if>
+            <if test="dcRatePower != null">dc_rate_power = #{dcRatePower},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="stationLng != null">station_lng = #{stationLng},</if>
+            <if test="stationLat != null">station_lat = #{stationLat},</if>
+            <if test="devicePower != null">device_power = #{devicePower},</if>
+            <if test="stationModel != null">station_model = #{stationModel},</if>
+            <if test="stationStatus != null">station_status = #{stationStatus},</if>
+            <if test="stationType != null">station_type = #{stationType},</if>
+            <if test="stationModified != null">station_modified = #{stationModified},</if>
+            <if test="stationCreate != null">station_create = #{stationCreate},</if>
+            <if test="operatorId != null">operator_id = #{operatorId},</if>
+            <if test="parkFee != null">park_fee = #{parkFee},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChargingStationById" parameterType="Integer">
+        delete from charging_station where id = #{id}
+    </delete>
+
+    <delete id="deleteChargingStationByIds" parameterType="String">
+        delete from charging_station where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

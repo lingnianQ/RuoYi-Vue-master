@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingBillProcessMapper">
+    
+    <resultMap type="ChargingBillProcess" id="ChargingBillProcessResult">
+        <result property="id"    column="Id"    />
+        <result property="billNumber"    column="bill_number"    />
+        <result property="chargingCapacity"    column="charging_capacity"    />
+        <result property="electricMoney"    column="electric_money"    />
+        <result property="serviceMoney"    column="service_money"    />
+        <result property="chargingDuration"    column="charging_duration"    />
+        <result property="userId"    column="user_id"    />
+        <result property="operatorId"    column="operator_id"    />
+        <result property="stationId"    column="station_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="chargingStartTime"    column="charging_start_time"    />
+        <result property="chargingEndTime"    column="charging_end_time"    />
+        <result property="billStatus"    column="bill_status"    />
+        <result property="payAmount"    column="pay_amount"    />
+        <result property="payTime"    column="pay_time"    />
+        <result property="payChannel"    column="pay_channel"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="rateCapacity"    column="rate_capacity"    />
+        <result property="totalCapacity"    column="total_capacity"    />
+    </resultMap>
+
+    <sql id="selectChargingBillProcessVo">
+        select Id, bill_number, charging_capacity, electric_money, service_money, charging_duration, user_id, operator_id, station_id, device_id, charging_start_time, charging_end_time, bill_status, pay_amount, pay_time, pay_channel, create_time, rate_capacity, total_capacity from charging_bill_process
+    </sql>
+
+    <select id="selectChargingBillProcessList" parameterType="ChargingBillProcess" resultMap="ChargingBillProcessResult">
+        <include refid="selectChargingBillProcessVo"/>
+        <where>  
+            <if test="chargingCapacity != null "> and charging_capacity = #{chargingCapacity}</if>
+            <if test="electricMoney != null "> and electric_money = #{electricMoney}</if>
+            <if test="serviceMoney != null "> and service_money = #{serviceMoney}</if>
+            <if test="chargingDuration != null "> and charging_duration = #{chargingDuration}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="operatorId != null "> and operator_id = #{operatorId}</if>
+            <if test="stationId != null "> and station_id = #{stationId}</if>
+            <if test="deviceId != null "> and device_id = #{deviceId}</if>
+            <if test="chargingStartTime != null "> and charging_start_time = #{chargingStartTime}</if>
+            <if test="chargingEndTime != null "> and charging_end_time = #{chargingEndTime}</if>
+            <if test="billStatus != null "> and bill_status = #{billStatus}</if>
+            <if test="payAmount != null "> and pay_amount = #{payAmount}</if>
+            <if test="payTime != null "> and pay_time = #{payTime}</if>
+            <if test="payChannel != null "> and pay_channel = #{payChannel}</if>
+            <if test="rateCapacity != null "> and rate_capacity = #{rateCapacity}</if>
+            <if test="totalCapacity != null "> and total_capacity = #{totalCapacity}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingBillProcessById" parameterType="Integer" resultMap="ChargingBillProcessResult">
+        <include refid="selectChargingBillProcessVo"/>
+        where Id = #{id}
+    </select>
+        
+    <insert id="insertChargingBillProcess" parameterType="ChargingBillProcess" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_bill_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billNumber != null">bill_number,</if>
+            <if test="chargingCapacity != null">charging_capacity,</if>
+            <if test="electricMoney != null">electric_money,</if>
+            <if test="serviceMoney != null">service_money,</if>
+            <if test="chargingDuration != null">charging_duration,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="operatorId != null">operator_id,</if>
+            <if test="stationId != null">station_id,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="chargingStartTime != null">charging_start_time,</if>
+            <if test="chargingEndTime != null">charging_end_time,</if>
+            <if test="billStatus != null">bill_status,</if>
+            <if test="payAmount != null">pay_amount,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="payChannel != null">pay_channel,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="rateCapacity != null">rate_capacity,</if>
+            <if test="totalCapacity != null">total_capacity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="billNumber != null">#{billNumber},</if>
+            <if test="chargingCapacity != null">#{chargingCapacity},</if>
+            <if test="electricMoney != null">#{electricMoney},</if>
+            <if test="serviceMoney != null">#{serviceMoney},</if>
+            <if test="chargingDuration != null">#{chargingDuration},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            <if test="stationId != null">#{stationId},</if>
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="chargingStartTime != null">#{chargingStartTime},</if>
+            <if test="chargingEndTime != null">#{chargingEndTime},</if>
+            <if test="billStatus != null">#{billStatus},</if>
+            <if test="payAmount != null">#{payAmount},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="payChannel != null">#{payChannel},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="rateCapacity != null">#{rateCapacity},</if>
+            <if test="totalCapacity != null">#{totalCapacity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingBillProcess" parameterType="ChargingBillProcess">
+        update charging_bill_process
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billNumber != null">bill_number = #{billNumber},</if>
+            <if test="chargingCapacity != null">charging_capacity = #{chargingCapacity},</if>
+            <if test="electricMoney != null">electric_money = #{electricMoney},</if>
+            <if test="serviceMoney != null">service_money = #{serviceMoney},</if>
+            <if test="chargingDuration != null">charging_duration = #{chargingDuration},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="operatorId != null">operator_id = #{operatorId},</if>
+            <if test="stationId != null">station_id = #{stationId},</if>
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="chargingStartTime != null">charging_start_time = #{chargingStartTime},</if>
+            <if test="chargingEndTime != null">charging_end_time = #{chargingEndTime},</if>
+            <if test="billStatus != null">bill_status = #{billStatus},</if>
+            <if test="payAmount != null">pay_amount = #{payAmount},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="payChannel != null">pay_channel = #{payChannel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="rateCapacity != null">rate_capacity = #{rateCapacity},</if>
+            <if test="totalCapacity != null">total_capacity = #{totalCapacity},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteChargingBillProcessById" parameterType="Integer">
+        delete from charging_bill_process where Id = #{id}
+    </delete>
+
+    <delete id="deleteChargingBillProcessByIds" parameterType="String">
+        delete from charging_bill_process where Id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

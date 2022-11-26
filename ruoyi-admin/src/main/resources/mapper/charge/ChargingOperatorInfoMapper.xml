@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.charge.mapper.ChargingOperatorInfoMapper">
+    
+    <resultMap type="ChargingOperatorInfo" id="ChargingOperatorInfoResult">
+        <result property="id"    column="id"    />
+        <result property="operatorNumber"    column="operator_number"    />
+        <result property="operatorName"    column="operator_name"    />
+        <result property="business"    column="business"    />
+        <result property="phone"    column="phone"    />
+        <result property="address"    column="address"    />
+        <result property="powerRate"    column="power_rate"    />
+        <result property="serviceFee"    column="service_fee"    />
+        <result property="payType"    column="pay_type"    />
+    </resultMap>
+
+    <sql id="selectChargingOperatorInfoVo">
+        select id, operator_number, operator_name, business, phone, address, power_rate, service_fee, pay_type from charging_operator_info
+    </sql>
+
+    <select id="selectChargingOperatorInfoList" parameterType="ChargingOperatorInfo" resultMap="ChargingOperatorInfoResult">
+        <include refid="selectChargingOperatorInfoVo"/>
+        <where>  
+            <if test="operatorNumber != null  and operatorNumber != ''"> and operator_number = #{operatorNumber}</if>
+            <if test="operatorName != null  and operatorName != ''"> and operator_name like concat('%', #{operatorName}, '%')</if>
+            <if test="business != null  and business != ''"> and business = #{business}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="powerRate != null "> and power_rate = #{powerRate}</if>
+            <if test="serviceFee != null "> and service_fee = #{serviceFee}</if>
+            <if test="payType != null "> and pay_type = #{payType}</if>
+        </where>
+    </select>
+    
+    <select id="selectChargingOperatorInfoById" parameterType="Integer" resultMap="ChargingOperatorInfoResult">
+        <include refid="selectChargingOperatorInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChargingOperatorInfo" parameterType="ChargingOperatorInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into charging_operator_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operatorNumber != null and operatorNumber != ''">operator_number,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="business != null">business,</if>
+            <if test="phone != null">phone,</if>
+            <if test="address != null">address,</if>
+            <if test="powerRate != null">power_rate,</if>
+            <if test="serviceFee != null">service_fee,</if>
+            <if test="payType != null">pay_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operatorNumber != null and operatorNumber != ''">#{operatorNumber},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="business != null">#{business},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="address != null">#{address},</if>
+            <if test="powerRate != null">#{powerRate},</if>
+            <if test="serviceFee != null">#{serviceFee},</if>
+            <if test="payType != null">#{payType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChargingOperatorInfo" parameterType="ChargingOperatorInfo">
+        update charging_operator_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="operatorNumber != null and operatorNumber != ''">operator_number = #{operatorNumber},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="business != null">business = #{business},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="powerRate != null">power_rate = #{powerRate},</if>
+            <if test="serviceFee != null">service_fee = #{serviceFee},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChargingOperatorInfoById" parameterType="Integer">
+        delete from charging_operator_info where id = #{id}
+    </delete>
+
+    <delete id="deleteChargingOperatorInfoByIds" parameterType="String">
+        delete from charging_operator_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
