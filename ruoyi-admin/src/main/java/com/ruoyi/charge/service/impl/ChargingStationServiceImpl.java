@@ -25,8 +25,7 @@ import com.ruoyi.charge.service.IChargingStationService;
  * @date 2022-11-10
  */
 @Service
-public class ChargingStationServiceImpl implements IChargingStationService
-{
+public class ChargingStationServiceImpl implements IChargingStationService {
     @Autowired
     private ChargingStationMapper chargingStationMapper;
 
@@ -40,9 +39,11 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 充电站
      */
     @Override
-    public ChargingStation selectChargingStationById(Integer id)
-    {
-        return chargingStationMapper.selectChargingStationById(id);
+    public ChargingStation selectChargingStationById(Integer id) {
+
+        //从redis中获取ChargingStation
+        return (ChargingStation) redisTemplate.boundHashOps(GlobalConstant.STATION_HASH).get(id.toString());
+//        return chargingStationMapper.selectChargingStationById(id);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
 
         BoundHashOperations boundHashOperations = redisTemplate.boundHashOps(GlobalConstant.STATION_HASH);
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
 
             GeoResult<RedisGeoCommands.GeoLocation<String>> geo = iterator.next();
             String stationId = geo.getContent().getName();
@@ -72,7 +73,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
             //从redis hash 取一个充电站
             ChargingStation chargingStation = (ChargingStation) boundHashOperations.get(stationId);
             NearbyChargingStation nearbyChargingStation = new NearbyChargingStation();
-            BeanUtils.copyProperties(chargingStation,nearbyChargingStation);
+            BeanUtils.copyProperties(chargingStation, nearbyChargingStation);
 
             nearbyChargingStation.setDistance(stationDistance);
 
@@ -91,8 +92,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 充电站
      */
     @Override
-    public List<ChargingStation> selectChargingStationList(ChargingStation chargingStation)
-    {
+    public List<ChargingStation> selectChargingStationList(ChargingStation chargingStation) {
         return chargingStationMapper.selectChargingStationList(chargingStation);
     }
 
@@ -103,8 +103,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 结果
      */
     @Override
-    public int insertChargingStation(ChargingStation chargingStation)
-    {
+    public int insertChargingStation(ChargingStation chargingStation) {
         return chargingStationMapper.insertChargingStation(chargingStation);
     }
 
@@ -115,8 +114,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 结果
      */
     @Override
-    public int updateChargingStation(ChargingStation chargingStation)
-    {
+    public int updateChargingStation(ChargingStation chargingStation) {
         return chargingStationMapper.updateChargingStation(chargingStation);
     }
 
@@ -127,8 +125,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 结果
      */
     @Override
-    public int deleteChargingStationByIds(Integer[] ids)
-    {
+    public int deleteChargingStationByIds(Integer[] ids) {
         return chargingStationMapper.deleteChargingStationByIds(ids);
     }
 
@@ -139,8 +136,7 @@ public class ChargingStationServiceImpl implements IChargingStationService
      * @return 结果
      */
     @Override
-    public int deleteChargingStationById(Integer id)
-    {
+    public int deleteChargingStationById(Integer id) {
         return chargingStationMapper.deleteChargingStationById(id);
     }
 }

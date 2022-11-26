@@ -20,8 +20,9 @@ public class chargingApplication {
 
     @Autowired
     RedisTemplate redisTemplate;
+
     @PostConstruct
-    public  void readStationWriteToRedis(){
+    public void readStationWriteToRedis() {
         System.out.println("readStationWriteToRedis");
         //1,读取charging_station表中所有数据
         List<ChargingStation> chargingStationList = chargingStationService.selectChargingStationList(null);
@@ -29,15 +30,15 @@ public class chargingApplication {
 
         BoundHashOperations boundHashOperations = redisTemplate.boundHashOps(GlobalConstant.STATION_HASH);
 
-        for (ChargingStation chargingStation:chargingStationList){
+        for (ChargingStation chargingStation : chargingStationList) {
             double longitude = Double.parseDouble(chargingStation.getStationLng().toString());
             double latitude = Double.parseDouble(chargingStation.getStationLat().toString());
-            String id=chargingStation.getId().toString();
+            String id = chargingStation.getId().toString();
 
             Point point = new Point(longitude, latitude);
-            map.put(id,point);
+            map.put(id, point);
 
-            boundHashOperations.put(id,chargingStation);
+            boundHashOperations.put(id, chargingStation);
         }
         redisTemplate.boundGeoOps(GlobalConstant.GEO_LIST).add(map);
 
