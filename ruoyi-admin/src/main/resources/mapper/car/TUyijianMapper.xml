@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TUyijianMapper">
+    
+    <resultMap type="TUyijian" id="TUyijianResult">
+        <result property="uyijianid"    column="uyijianId"    />
+        <result property="uyijianname"    column="uyijianName"    />
+        <result property="uyijianmark"    column="uyijianMark"    />
+        <result property="uyijianmark1"    column="uyijianMark1"    />
+        <result property="uyijianmark2"    column="uyijianMark2"    />
+        <result property="uyijianimg"    column="uyijianImg"    />
+        <result property="uyijianimgname"    column="uyijianImgName"    />
+        <result property="uyijiandate"    column="uyijianDate"    />
+        <result property="uyijiandate1"    column="uyijianDate1"    />
+        <result property="uyijiantype"    column="uyijianType"    />
+        <result property="uyijiantype1"    column="uyijianType1"    />
+        <result property="userid"    column="userId"    />
+        <result property="username"    column="userName"    />
+        <result property="bumenid"    column="bumenId"    />
+        <result property="bumenname"    column="bumenName"    />
+    </resultMap>
+
+    <sql id="selectTUyijianVo">
+        select uyijianId, uyijianName, uyijianMark, uyijianMark1, uyijianMark2, uyijianImg, uyijianImgName, uyijianDate, uyijianDate1, uyijianType, uyijianType1, userId, userName, bumenId, bumenName from t_uyijian
+    </sql>
+
+    <select id="selectTUyijianList" parameterType="TUyijian" resultMap="TUyijianResult">
+        <include refid="selectTUyijianVo"/>
+        <where>  
+            <if test="uyijianname != null  and uyijianname != ''"> and uyijianName like concat('%', #{uyijianname}, '%')</if>
+            <if test="uyijianmark != null  and uyijianmark != ''"> and uyijianMark = #{uyijianmark}</if>
+            <if test="uyijianmark1 != null  and uyijianmark1 != ''"> and uyijianMark1 = #{uyijianmark1}</if>
+            <if test="uyijianmark2 != null  and uyijianmark2 != ''"> and uyijianMark2 = #{uyijianmark2}</if>
+            <if test="uyijianimg != null  and uyijianimg != ''"> and uyijianImg = #{uyijianimg}</if>
+            <if test="uyijianimgname != null  and uyijianimgname != ''"> and uyijianImgName like concat('%', #{uyijianimgname}, '%')</if>
+            <if test="uyijiandate != null "> and uyijianDate = #{uyijiandate}</if>
+            <if test="uyijiandate1 != null "> and uyijianDate1 = #{uyijiandate1}</if>
+            <if test="uyijiantype != null "> and uyijianType = #{uyijiantype}</if>
+            <if test="uyijiantype1 != null "> and uyijianType1 = #{uyijiantype1}</if>
+            <if test="userid != null "> and userId = #{userid}</if>
+            <if test="username != null  and username != ''"> and userName like concat('%', #{username}, '%')</if>
+            <if test="bumenid != null "> and bumenId = #{bumenid}</if>
+            <if test="bumenname != null  and bumenname != ''"> and bumenName like concat('%', #{bumenname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTUyijianByUyijianid" parameterType="Long" resultMap="TUyijianResult">
+        <include refid="selectTUyijianVo"/>
+        where uyijianId = #{uyijianid}
+    </select>
+        
+    <insert id="insertTUyijian" parameterType="TUyijian" useGeneratedKeys="true" keyProperty="uyijianid">
+        insert into t_uyijian
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uyijianname != null">uyijianName,</if>
+            <if test="uyijianmark != null">uyijianMark,</if>
+            <if test="uyijianmark1 != null">uyijianMark1,</if>
+            <if test="uyijianmark2 != null">uyijianMark2,</if>
+            <if test="uyijianimg != null">uyijianImg,</if>
+            <if test="uyijianimgname != null">uyijianImgName,</if>
+            <if test="uyijiandate != null">uyijianDate,</if>
+            <if test="uyijiandate1 != null">uyijianDate1,</if>
+            <if test="uyijiantype != null">uyijianType,</if>
+            <if test="uyijiantype1 != null">uyijianType1,</if>
+            <if test="userid != null">userId,</if>
+            <if test="username != null">userName,</if>
+            <if test="bumenid != null">bumenId,</if>
+            <if test="bumenname != null">bumenName,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uyijianname != null">#{uyijianname},</if>
+            <if test="uyijianmark != null">#{uyijianmark},</if>
+            <if test="uyijianmark1 != null">#{uyijianmark1},</if>
+            <if test="uyijianmark2 != null">#{uyijianmark2},</if>
+            <if test="uyijianimg != null">#{uyijianimg},</if>
+            <if test="uyijianimgname != null">#{uyijianimgname},</if>
+            <if test="uyijiandate != null">#{uyijiandate},</if>
+            <if test="uyijiandate1 != null">#{uyijiandate1},</if>
+            <if test="uyijiantype != null">#{uyijiantype},</if>
+            <if test="uyijiantype1 != null">#{uyijiantype1},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="bumenid != null">#{bumenid},</if>
+            <if test="bumenname != null">#{bumenname},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTUyijian" parameterType="TUyijian">
+        update t_uyijian
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uyijianname != null">uyijianName = #{uyijianname},</if>
+            <if test="uyijianmark != null">uyijianMark = #{uyijianmark},</if>
+            <if test="uyijianmark1 != null">uyijianMark1 = #{uyijianmark1},</if>
+            <if test="uyijianmark2 != null">uyijianMark2 = #{uyijianmark2},</if>
+            <if test="uyijianimg != null">uyijianImg = #{uyijianimg},</if>
+            <if test="uyijianimgname != null">uyijianImgName = #{uyijianimgname},</if>
+            <if test="uyijiandate != null">uyijianDate = #{uyijiandate},</if>
+            <if test="uyijiandate1 != null">uyijianDate1 = #{uyijiandate1},</if>
+            <if test="uyijiantype != null">uyijianType = #{uyijiantype},</if>
+            <if test="uyijiantype1 != null">uyijianType1 = #{uyijiantype1},</if>
+            <if test="userid != null">userId = #{userid},</if>
+            <if test="username != null">userName = #{username},</if>
+            <if test="bumenid != null">bumenId = #{bumenid},</if>
+            <if test="bumenname != null">bumenName = #{bumenname},</if>
+        </trim>
+        where uyijianId = #{uyijianid}
+    </update>
+
+    <delete id="deleteTUyijianByUyijianid" parameterType="Long">
+        delete from t_uyijian where uyijianId = #{uyijianid}
+    </delete>
+
+    <delete id="deleteTUyijianByUyijianids" parameterType="String">
+        delete from t_uyijian where uyijianId in 
+        <foreach item="uyijianid" collection="array" open="(" separator="," close=")">
+            #{uyijianid}
+        </foreach>
+    </delete>
+</mapper>

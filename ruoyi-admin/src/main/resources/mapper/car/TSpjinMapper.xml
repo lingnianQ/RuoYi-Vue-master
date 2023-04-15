@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TSpjinMapper">
+    
+    <resultMap type="TSpjin" id="TSpjinResult">
+        <result property="spjinid"    column="spjinId"    />
+        <result property="spjinname"    column="spjinName"    />
+        <result property="spjinmark"    column="spjinMark"    />
+        <result property="spjinmark1"    column="spjinMark1"    />
+        <result property="spjinmark2"    column="spjinMark2"    />
+        <result property="spjinmark3"    column="spjinMark3"    />
+        <result property="spjindate"    column="spjinDate"    />
+        <result property="spjindate1"    column="spjinDate1"    />
+        <result property="spjinzong"    column="spjinZong"    />
+        <result property="spjinjine"    column="spjinJine"    />
+        <result property="spjinze"    column="spjinZe"    />
+        <result property="spjintype"    column="spjinType"    />
+        <result property="spjintype1"    column="spjinType1"    />
+        <result property="shangpinid"    column="shangpinId"    />
+        <result property="shangpinname"    column="shangpinName"    />
+        <result property="sptypeid"    column="sptypeId"    />
+        <result property="sptypename"    column="sptypeName"    />
+        <result property="spcangkuid"    column="spcangkuId"    />
+        <result property="spcangkuname"    column="spcangkuName"    />
+        <result property="spgysid"    column="spgysId"    />
+        <result property="spgysname"    column="spgysName"    />
+        <result property="userid"    column="userId"    />
+        <result property="username"    column="userName"    />
+        <result property="bumenid"    column="bumenId"    />
+        <result property="bumenname"    column="bumenName"    />
+        <result property="roleid"    column="roleId"    />
+        <result property="rolename"    column="roleName"    />
+        <result property="spjinimg"    column="spjinImg"    />
+        <result property="spjinimgname"    column="spjinImgName"    />
+    </resultMap>
+
+    <sql id="selectTSpjinVo">
+        select spjinId, spjinName, spjinMark, spjinMark1, spjinMark2, spjinMark3, spjinDate, spjinDate1, spjinZong, spjinJine, spjinZe, spjinType, spjinType1, shangpinId, shangpinName, sptypeId, sptypeName, spcangkuId, spcangkuName, spgysId, spgysName, userId, userName, bumenId, bumenName, roleId, roleName, spjinImg, spjinImgName from t_spjin
+    </sql>
+
+    <select id="selectTSpjinList" parameterType="TSpjin" resultMap="TSpjinResult">
+        <include refid="selectTSpjinVo"/>
+        <where>  
+            <if test="spjinname != null  and spjinname != ''"> and spjinName like concat('%', #{spjinname}, '%')</if>
+            <if test="spjinmark != null  and spjinmark != ''"> and spjinMark = #{spjinmark}</if>
+            <if test="spjinmark1 != null  and spjinmark1 != ''"> and spjinMark1 = #{spjinmark1}</if>
+            <if test="spjinmark2 != null  and spjinmark2 != ''"> and spjinMark2 = #{spjinmark2}</if>
+            <if test="spjinmark3 != null  and spjinmark3 != ''"> and spjinMark3 = #{spjinmark3}</if>
+            <if test="spjindate != null "> and spjinDate = #{spjindate}</if>
+            <if test="spjindate1 != null "> and spjinDate1 = #{spjindate1}</if>
+            <if test="spjinzong != null "> and spjinZong = #{spjinzong}</if>
+            <if test="spjinjine != null "> and spjinJine = #{spjinjine}</if>
+            <if test="spjinze != null "> and spjinZe = #{spjinze}</if>
+            <if test="spjintype != null "> and spjinType = #{spjintype}</if>
+            <if test="spjintype1 != null "> and spjinType1 = #{spjintype1}</if>
+            <if test="shangpinid != null "> and shangpinId = #{shangpinid}</if>
+            <if test="shangpinname != null  and shangpinname != ''"> and shangpinName like concat('%', #{shangpinname}, '%')</if>
+            <if test="sptypeid != null "> and sptypeId = #{sptypeid}</if>
+            <if test="sptypename != null  and sptypename != ''"> and sptypeName like concat('%', #{sptypename}, '%')</if>
+            <if test="spcangkuid != null "> and spcangkuId = #{spcangkuid}</if>
+            <if test="spcangkuname != null  and spcangkuname != ''"> and spcangkuName like concat('%', #{spcangkuname}, '%')</if>
+            <if test="spgysid != null "> and spgysId = #{spgysid}</if>
+            <if test="spgysname != null  and spgysname != ''"> and spgysName like concat('%', #{spgysname}, '%')</if>
+            <if test="userid != null "> and userId = #{userid}</if>
+            <if test="username != null  and username != ''"> and userName like concat('%', #{username}, '%')</if>
+            <if test="bumenid != null "> and bumenId = #{bumenid}</if>
+            <if test="bumenname != null  and bumenname != ''"> and bumenName like concat('%', #{bumenname}, '%')</if>
+            <if test="roleid != null "> and roleId = #{roleid}</if>
+            <if test="rolename != null  and rolename != ''"> and roleName like concat('%', #{rolename}, '%')</if>
+            <if test="spjinimg != null  and spjinimg != ''"> and spjinImg = #{spjinimg}</if>
+            <if test="spjinimgname != null  and spjinimgname != ''"> and spjinImgName like concat('%', #{spjinimgname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTSpjinBySpjinid" parameterType="Long" resultMap="TSpjinResult">
+        <include refid="selectTSpjinVo"/>
+        where spjinId = #{spjinid}
+    </select>
+        
+    <insert id="insertTSpjin" parameterType="TSpjin" useGeneratedKeys="true" keyProperty="spjinid">
+        insert into t_spjin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spjinname != null">spjinName,</if>
+            <if test="spjinmark != null">spjinMark,</if>
+            <if test="spjinmark1 != null">spjinMark1,</if>
+            <if test="spjinmark2 != null">spjinMark2,</if>
+            <if test="spjinmark3 != null">spjinMark3,</if>
+            <if test="spjindate != null">spjinDate,</if>
+            <if test="spjindate1 != null">spjinDate1,</if>
+            <if test="spjinzong != null">spjinZong,</if>
+            <if test="spjinjine != null">spjinJine,</if>
+            <if test="spjinze != null">spjinZe,</if>
+            <if test="spjintype != null">spjinType,</if>
+            <if test="spjintype1 != null">spjinType1,</if>
+            <if test="shangpinid != null">shangpinId,</if>
+            <if test="shangpinname != null">shangpinName,</if>
+            <if test="sptypeid != null">sptypeId,</if>
+            <if test="sptypename != null">sptypeName,</if>
+            <if test="spcangkuid != null">spcangkuId,</if>
+            <if test="spcangkuname != null">spcangkuName,</if>
+            <if test="spgysid != null">spgysId,</if>
+            <if test="spgysname != null">spgysName,</if>
+            <if test="userid != null">userId,</if>
+            <if test="username != null">userName,</if>
+            <if test="bumenid != null">bumenId,</if>
+            <if test="bumenname != null">bumenName,</if>
+            <if test="roleid != null">roleId,</if>
+            <if test="rolename != null">roleName,</if>
+            <if test="spjinimg != null">spjinImg,</if>
+            <if test="spjinimgname != null">spjinImgName,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spjinname != null">#{spjinname},</if>
+            <if test="spjinmark != null">#{spjinmark},</if>
+            <if test="spjinmark1 != null">#{spjinmark1},</if>
+            <if test="spjinmark2 != null">#{spjinmark2},</if>
+            <if test="spjinmark3 != null">#{spjinmark3},</if>
+            <if test="spjindate != null">#{spjindate},</if>
+            <if test="spjindate1 != null">#{spjindate1},</if>
+            <if test="spjinzong != null">#{spjinzong},</if>
+            <if test="spjinjine != null">#{spjinjine},</if>
+            <if test="spjinze != null">#{spjinze},</if>
+            <if test="spjintype != null">#{spjintype},</if>
+            <if test="spjintype1 != null">#{spjintype1},</if>
+            <if test="shangpinid != null">#{shangpinid},</if>
+            <if test="shangpinname != null">#{shangpinname},</if>
+            <if test="sptypeid != null">#{sptypeid},</if>
+            <if test="sptypename != null">#{sptypename},</if>
+            <if test="spcangkuid != null">#{spcangkuid},</if>
+            <if test="spcangkuname != null">#{spcangkuname},</if>
+            <if test="spgysid != null">#{spgysid},</if>
+            <if test="spgysname != null">#{spgysname},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="bumenid != null">#{bumenid},</if>
+            <if test="bumenname != null">#{bumenname},</if>
+            <if test="roleid != null">#{roleid},</if>
+            <if test="rolename != null">#{rolename},</if>
+            <if test="spjinimg != null">#{spjinimg},</if>
+            <if test="spjinimgname != null">#{spjinimgname},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSpjin" parameterType="TSpjin">
+        update t_spjin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spjinname != null">spjinName = #{spjinname},</if>
+            <if test="spjinmark != null">spjinMark = #{spjinmark},</if>
+            <if test="spjinmark1 != null">spjinMark1 = #{spjinmark1},</if>
+            <if test="spjinmark2 != null">spjinMark2 = #{spjinmark2},</if>
+            <if test="spjinmark3 != null">spjinMark3 = #{spjinmark3},</if>
+            <if test="spjindate != null">spjinDate = #{spjindate},</if>
+            <if test="spjindate1 != null">spjinDate1 = #{spjindate1},</if>
+            <if test="spjinzong != null">spjinZong = #{spjinzong},</if>
+            <if test="spjinjine != null">spjinJine = #{spjinjine},</if>
+            <if test="spjinze != null">spjinZe = #{spjinze},</if>
+            <if test="spjintype != null">spjinType = #{spjintype},</if>
+            <if test="spjintype1 != null">spjinType1 = #{spjintype1},</if>
+            <if test="shangpinid != null">shangpinId = #{shangpinid},</if>
+            <if test="shangpinname != null">shangpinName = #{shangpinname},</if>
+            <if test="sptypeid != null">sptypeId = #{sptypeid},</if>
+            <if test="sptypename != null">sptypeName = #{sptypename},</if>
+            <if test="spcangkuid != null">spcangkuId = #{spcangkuid},</if>
+            <if test="spcangkuname != null">spcangkuName = #{spcangkuname},</if>
+            <if test="spgysid != null">spgysId = #{spgysid},</if>
+            <if test="spgysname != null">spgysName = #{spgysname},</if>
+            <if test="userid != null">userId = #{userid},</if>
+            <if test="username != null">userName = #{username},</if>
+            <if test="bumenid != null">bumenId = #{bumenid},</if>
+            <if test="bumenname != null">bumenName = #{bumenname},</if>
+            <if test="roleid != null">roleId = #{roleid},</if>
+            <if test="rolename != null">roleName = #{rolename},</if>
+            <if test="spjinimg != null">spjinImg = #{spjinimg},</if>
+            <if test="spjinimgname != null">spjinImgName = #{spjinimgname},</if>
+        </trim>
+        where spjinId = #{spjinid}
+    </update>
+
+    <delete id="deleteTSpjinBySpjinid" parameterType="Long">
+        delete from t_spjin where spjinId = #{spjinid}
+    </delete>
+
+    <delete id="deleteTSpjinBySpjinids" parameterType="String">
+        delete from t_spjin where spjinId in 
+        <foreach item="spjinid" collection="array" open="(" separator="," close=")">
+            #{spjinid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TSptypeMapper">
+    
+    <resultMap type="TSptype" id="TSptypeResult">
+        <result property="sptypeid"    column="sptypeId"    />
+        <result property="sptypename"    column="sptypeName"    />
+        <result property="sptypemark"    column="sptypeMark"    />
+        <result property="sptypemark1"    column="sptypeMark1"    />
+        <result property="sptypemark2"    column="sptypeMark2"    />
+    </resultMap>
+
+    <sql id="selectTSptypeVo">
+        select sptypeId, sptypeName, sptypeMark, sptypeMark1, sptypeMark2 from t_sptype
+    </sql>
+
+    <select id="selectTSptypeList" parameterType="TSptype" resultMap="TSptypeResult">
+        <include refid="selectTSptypeVo"/>
+        <where>  
+            <if test="sptypename != null  and sptypename != ''"> and sptypeName like concat('%', #{sptypename}, '%')</if>
+            <if test="sptypemark != null  and sptypemark != ''"> and sptypeMark = #{sptypemark}</if>
+            <if test="sptypemark1 != null  and sptypemark1 != ''"> and sptypeMark1 = #{sptypemark1}</if>
+            <if test="sptypemark2 != null "> and sptypeMark2 = #{sptypemark2}</if>
+        </where>
+    </select>
+    
+    <select id="selectTSptypeBySptypeid" parameterType="Long" resultMap="TSptypeResult">
+        <include refid="selectTSptypeVo"/>
+        where sptypeId = #{sptypeid}
+    </select>
+        
+    <insert id="insertTSptype" parameterType="TSptype" useGeneratedKeys="true" keyProperty="sptypeid">
+        insert into t_sptype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sptypename != null">sptypeName,</if>
+            <if test="sptypemark != null">sptypeMark,</if>
+            <if test="sptypemark1 != null">sptypeMark1,</if>
+            <if test="sptypemark2 != null">sptypeMark2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sptypename != null">#{sptypename},</if>
+            <if test="sptypemark != null">#{sptypemark},</if>
+            <if test="sptypemark1 != null">#{sptypemark1},</if>
+            <if test="sptypemark2 != null">#{sptypemark2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSptype" parameterType="TSptype">
+        update t_sptype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sptypename != null">sptypeName = #{sptypename},</if>
+            <if test="sptypemark != null">sptypeMark = #{sptypemark},</if>
+            <if test="sptypemark1 != null">sptypeMark1 = #{sptypemark1},</if>
+            <if test="sptypemark2 != null">sptypeMark2 = #{sptypemark2},</if>
+        </trim>
+        where sptypeId = #{sptypeid}
+    </update>
+
+    <delete id="deleteTSptypeBySptypeid" parameterType="Long">
+        delete from t_sptype where sptypeId = #{sptypeid}
+    </delete>
+
+    <delete id="deleteTSptypeBySptypeids" parameterType="String">
+        delete from t_sptype where sptypeId in 
+        <foreach item="sptypeid" collection="array" open="(" separator="," close=")">
+            #{sptypeid}
+        </foreach>
+    </delete>
+</mapper>

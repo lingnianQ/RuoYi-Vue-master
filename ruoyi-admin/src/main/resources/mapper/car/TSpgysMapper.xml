@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TSpgysMapper">
+    
+    <resultMap type="TSpgys" id="TSpgysResult">
+        <result property="spgysid"    column="spgysId"    />
+        <result property="spgysname"    column="spgysName"    />
+        <result property="spgysmark"    column="spgysMark"    />
+        <result property="spgysmark1"    column="spgysMark1"    />
+        <result property="spgysmark2"    column="spgysMark2"    />
+        <result property="spgysphone"    column="spgysPhone"    />
+        <result property="spgysdizhi"    column="spgysDizhi"    />
+        <result property="spgysdate"    column="spgysDate"    />
+        <result property="spgysdate1"    column="spgysDate1"    />
+        <result property="spgystype"    column="spgysType"    />
+        <result property="spgystype1"    column="spgysType1"    />
+    </resultMap>
+
+    <sql id="selectTSpgysVo">
+        select spgysId, spgysName, spgysMark, spgysMark1, spgysMark2, spgysPhone, spgysDizhi, spgysDate, spgysDate1, spgysType, spgysType1 from t_spgys
+    </sql>
+
+    <select id="selectTSpgysList" parameterType="TSpgys" resultMap="TSpgysResult">
+        <include refid="selectTSpgysVo"/>
+        <where>  
+            <if test="spgysname != null  and spgysname != ''"> and spgysName like concat('%', #{spgysname}, '%')</if>
+            <if test="spgysmark != null  and spgysmark != ''"> and spgysMark = #{spgysmark}</if>
+            <if test="spgysmark1 != null  and spgysmark1 != ''"> and spgysMark1 = #{spgysmark1}</if>
+            <if test="spgysmark2 != null  and spgysmark2 != ''"> and spgysMark2 = #{spgysmark2}</if>
+            <if test="spgysphone != null  and spgysphone != ''"> and spgysPhone = #{spgysphone}</if>
+            <if test="spgysdizhi != null  and spgysdizhi != ''"> and spgysDizhi = #{spgysdizhi}</if>
+            <if test="spgysdate != null "> and spgysDate = #{spgysdate}</if>
+            <if test="spgysdate1 != null "> and spgysDate1 = #{spgysdate1}</if>
+            <if test="spgystype != null "> and spgysType = #{spgystype}</if>
+            <if test="spgystype1 != null "> and spgysType1 = #{spgystype1}</if>
+        </where>
+    </select>
+    
+    <select id="selectTSpgysBySpgysid" parameterType="Long" resultMap="TSpgysResult">
+        <include refid="selectTSpgysVo"/>
+        where spgysId = #{spgysid}
+    </select>
+        
+    <insert id="insertTSpgys" parameterType="TSpgys" useGeneratedKeys="true" keyProperty="spgysid">
+        insert into t_spgys
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spgysname != null">spgysName,</if>
+            <if test="spgysmark != null">spgysMark,</if>
+            <if test="spgysmark1 != null">spgysMark1,</if>
+            <if test="spgysmark2 != null">spgysMark2,</if>
+            <if test="spgysphone != null">spgysPhone,</if>
+            <if test="spgysdizhi != null">spgysDizhi,</if>
+            <if test="spgysdate != null">spgysDate,</if>
+            <if test="spgysdate1 != null">spgysDate1,</if>
+            <if test="spgystype != null">spgysType,</if>
+            <if test="spgystype1 != null">spgysType1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spgysname != null">#{spgysname},</if>
+            <if test="spgysmark != null">#{spgysmark},</if>
+            <if test="spgysmark1 != null">#{spgysmark1},</if>
+            <if test="spgysmark2 != null">#{spgysmark2},</if>
+            <if test="spgysphone != null">#{spgysphone},</if>
+            <if test="spgysdizhi != null">#{spgysdizhi},</if>
+            <if test="spgysdate != null">#{spgysdate},</if>
+            <if test="spgysdate1 != null">#{spgysdate1},</if>
+            <if test="spgystype != null">#{spgystype},</if>
+            <if test="spgystype1 != null">#{spgystype1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSpgys" parameterType="TSpgys">
+        update t_spgys
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spgysname != null">spgysName = #{spgysname},</if>
+            <if test="spgysmark != null">spgysMark = #{spgysmark},</if>
+            <if test="spgysmark1 != null">spgysMark1 = #{spgysmark1},</if>
+            <if test="spgysmark2 != null">spgysMark2 = #{spgysmark2},</if>
+            <if test="spgysphone != null">spgysPhone = #{spgysphone},</if>
+            <if test="spgysdizhi != null">spgysDizhi = #{spgysdizhi},</if>
+            <if test="spgysdate != null">spgysDate = #{spgysdate},</if>
+            <if test="spgysdate1 != null">spgysDate1 = #{spgysdate1},</if>
+            <if test="spgystype != null">spgysType = #{spgystype},</if>
+            <if test="spgystype1 != null">spgysType1 = #{spgystype1},</if>
+        </trim>
+        where spgysId = #{spgysid}
+    </update>
+
+    <delete id="deleteTSpgysBySpgysid" parameterType="Long">
+        delete from t_spgys where spgysId = #{spgysid}
+    </delete>
+
+    <delete id="deleteTSpgysBySpgysids" parameterType="String">
+        delete from t_spgys where spgysId in 
+        <foreach item="spgysid" collection="array" open="(" separator="," close=")">
+            #{spgysid}
+        </foreach>
+    </delete>
+</mapper>

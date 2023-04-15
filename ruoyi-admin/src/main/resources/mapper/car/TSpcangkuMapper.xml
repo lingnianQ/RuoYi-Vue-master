@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TSpcangkuMapper">
+    
+    <resultMap type="TSpcangku" id="TSpcangkuResult">
+        <result property="spcangkuid"    column="spcangkuId"    />
+        <result property="spcangkuname"    column="spcangkuName"    />
+        <result property="spcangkumark"    column="spcangkuMark"    />
+        <result property="spcangkumark1"    column="spcangkuMark1"    />
+        <result property="spcangkumark2"    column="spcangkuMark2"    />
+        <result property="spcangkuphone"    column="spcangkuPhone"    />
+        <result property="spcangkudizhi"    column="spcangkuDizhi"    />
+        <result property="spcangkudate"    column="spcangkuDate"    />
+        <result property="spcangkudate1"    column="spcangkuDate1"    />
+        <result property="spcangkutype"    column="spcangkuType"    />
+        <result property="spcangkutype1"    column="spcangkuType1"    />
+    </resultMap>
+
+    <sql id="selectTSpcangkuVo">
+        select spcangkuId, spcangkuName, spcangkuMark, spcangkuMark1, spcangkuMark2, spcangkuPhone, spcangkuDizhi, spcangkuDate, spcangkuDate1, spcangkuType, spcangkuType1 from t_spcangku
+    </sql>
+
+    <select id="selectTSpcangkuList" parameterType="TSpcangku" resultMap="TSpcangkuResult">
+        <include refid="selectTSpcangkuVo"/>
+        <where>  
+            <if test="spcangkuname != null  and spcangkuname != ''"> and spcangkuName like concat('%', #{spcangkuname}, '%')</if>
+            <if test="spcangkumark != null  and spcangkumark != ''"> and spcangkuMark = #{spcangkumark}</if>
+            <if test="spcangkumark1 != null  and spcangkumark1 != ''"> and spcangkuMark1 = #{spcangkumark1}</if>
+            <if test="spcangkumark2 != null  and spcangkumark2 != ''"> and spcangkuMark2 = #{spcangkumark2}</if>
+            <if test="spcangkuphone != null  and spcangkuphone != ''"> and spcangkuPhone = #{spcangkuphone}</if>
+            <if test="spcangkudizhi != null  and spcangkudizhi != ''"> and spcangkuDizhi = #{spcangkudizhi}</if>
+            <if test="spcangkudate != null "> and spcangkuDate = #{spcangkudate}</if>
+            <if test="spcangkudate1 != null "> and spcangkuDate1 = #{spcangkudate1}</if>
+            <if test="spcangkutype != null "> and spcangkuType = #{spcangkutype}</if>
+            <if test="spcangkutype1 != null "> and spcangkuType1 = #{spcangkutype1}</if>
+        </where>
+    </select>
+    
+    <select id="selectTSpcangkuBySpcangkuid" parameterType="Long" resultMap="TSpcangkuResult">
+        <include refid="selectTSpcangkuVo"/>
+        where spcangkuId = #{spcangkuid}
+    </select>
+        
+    <insert id="insertTSpcangku" parameterType="TSpcangku" useGeneratedKeys="true" keyProperty="spcangkuid">
+        insert into t_spcangku
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spcangkuname != null">spcangkuName,</if>
+            <if test="spcangkumark != null">spcangkuMark,</if>
+            <if test="spcangkumark1 != null">spcangkuMark1,</if>
+            <if test="spcangkumark2 != null">spcangkuMark2,</if>
+            <if test="spcangkuphone != null">spcangkuPhone,</if>
+            <if test="spcangkudizhi != null">spcangkuDizhi,</if>
+            <if test="spcangkudate != null">spcangkuDate,</if>
+            <if test="spcangkudate1 != null">spcangkuDate1,</if>
+            <if test="spcangkutype != null">spcangkuType,</if>
+            <if test="spcangkutype1 != null">spcangkuType1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spcangkuname != null">#{spcangkuname},</if>
+            <if test="spcangkumark != null">#{spcangkumark},</if>
+            <if test="spcangkumark1 != null">#{spcangkumark1},</if>
+            <if test="spcangkumark2 != null">#{spcangkumark2},</if>
+            <if test="spcangkuphone != null">#{spcangkuphone},</if>
+            <if test="spcangkudizhi != null">#{spcangkudizhi},</if>
+            <if test="spcangkudate != null">#{spcangkudate},</if>
+            <if test="spcangkudate1 != null">#{spcangkudate1},</if>
+            <if test="spcangkutype != null">#{spcangkutype},</if>
+            <if test="spcangkutype1 != null">#{spcangkutype1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSpcangku" parameterType="TSpcangku">
+        update t_spcangku
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spcangkuname != null">spcangkuName = #{spcangkuname},</if>
+            <if test="spcangkumark != null">spcangkuMark = #{spcangkumark},</if>
+            <if test="spcangkumark1 != null">spcangkuMark1 = #{spcangkumark1},</if>
+            <if test="spcangkumark2 != null">spcangkuMark2 = #{spcangkumark2},</if>
+            <if test="spcangkuphone != null">spcangkuPhone = #{spcangkuphone},</if>
+            <if test="spcangkudizhi != null">spcangkuDizhi = #{spcangkudizhi},</if>
+            <if test="spcangkudate != null">spcangkuDate = #{spcangkudate},</if>
+            <if test="spcangkudate1 != null">spcangkuDate1 = #{spcangkudate1},</if>
+            <if test="spcangkutype != null">spcangkuType = #{spcangkutype},</if>
+            <if test="spcangkutype1 != null">spcangkuType1 = #{spcangkutype1},</if>
+        </trim>
+        where spcangkuId = #{spcangkuid}
+    </update>
+
+    <delete id="deleteTSpcangkuBySpcangkuid" parameterType="Long">
+        delete from t_spcangku where spcangkuId = #{spcangkuid}
+    </delete>
+
+    <delete id="deleteTSpcangkuBySpcangkuids" parameterType="String">
+        delete from t_spcangku where spcangkuId in 
+        <foreach item="spcangkuid" collection="array" open="(" separator="," close=")">
+            #{spcangkuid}
+        </foreach>
+    </delete>
+</mapper>

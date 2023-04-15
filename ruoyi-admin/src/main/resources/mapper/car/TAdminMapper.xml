@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TAdminMapper">
+    
+    <resultMap type="TAdmin" id="TAdminResult">
+        <result property="adminid"    column="adminId"    />
+        <result property="adminname"    column="adminName"    />
+        <result property="adminpassword"    column="adminPassword"    />
+    </resultMap>
+
+    <sql id="selectTAdminVo">
+        select adminId, adminName, adminPassword from t_admin
+    </sql>
+
+    <select id="selectTAdminList" parameterType="TAdmin" resultMap="TAdminResult">
+        <include refid="selectTAdminVo"/>
+        <where>  
+            <if test="adminname != null  and adminname != ''"> and adminName like concat('%', #{adminname}, '%')</if>
+            <if test="adminpassword != null  and adminpassword != ''"> and adminPassword = #{adminpassword}</if>
+        </where>
+    </select>
+    
+    <select id="selectTAdminByAdminid" parameterType="Long" resultMap="TAdminResult">
+        <include refid="selectTAdminVo"/>
+        where adminId = #{adminid}
+    </select>
+        
+    <insert id="insertTAdmin" parameterType="TAdmin" useGeneratedKeys="true" keyProperty="adminid">
+        insert into t_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminname != null">adminName,</if>
+            <if test="adminpassword != null">adminPassword,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminname != null">#{adminname},</if>
+            <if test="adminpassword != null">#{adminpassword},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTAdmin" parameterType="TAdmin">
+        update t_admin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="adminname != null">adminName = #{adminname},</if>
+            <if test="adminpassword != null">adminPassword = #{adminpassword},</if>
+        </trim>
+        where adminId = #{adminid}
+    </update>
+
+    <delete id="deleteTAdminByAdminid" parameterType="Long">
+        delete from t_admin where adminId = #{adminid}
+    </delete>
+
+    <delete id="deleteTAdminByAdminids" parameterType="String">
+        delete from t_admin where adminId in 
+        <foreach item="adminid" collection="array" open="(" separator="," close=")">
+            #{adminid}
+        </foreach>
+    </delete>
+</mapper>

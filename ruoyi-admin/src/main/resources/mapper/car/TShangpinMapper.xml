@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TShangpinMapper">
+    
+    <resultMap type="TShangpin" id="TShangpinResult">
+        <result property="shangpinid"    column="shangpinId"    />
+        <result property="shangpinname"    column="shangpinName"    />
+        <result property="shangpinmark"    column="shangpinMark"    />
+        <result property="shangpinmark1"    column="shangpinMark1"    />
+        <result property="shangpinmark2"    column="shangpinMark2"    />
+        <result property="shangpinmark3"    column="shangpinMark3"    />
+        <result property="shangpindate"    column="shangpinDate"    />
+        <result property="shangpindate1"    column="shangpinDate1"    />
+        <result property="shangpinzong"    column="shangpinZong"    />
+        <result property="shangpinjin"    column="shangpinJin"    />
+        <result property="shangpinxiao"    column="shangpinXiao"    />
+        <result property="shangpinlirun"    column="shangpinLirun"    />
+        <result property="shangpintype"    column="shangpinType"    />
+        <result property="shangpintype1"    column="shangpinType1"    />
+        <result property="shangpinimg"    column="shangpinImg"    />
+        <result property="shangpinimgname"    column="shangpinImgName"    />
+        <result property="sptypeid"    column="sptypeId"    />
+        <result property="sptypename"    column="sptypeName"    />
+        <result property="userid"    column="userId"    />
+        <result property="username"    column="userName"    />
+        <result property="bumenid"    column="bumenId"    />
+        <result property="bumenname"    column="bumenName"    />
+        <result property="roleid"    column="roleId"    />
+        <result property="rolename"    column="roleName"    />
+    </resultMap>
+
+    <sql id="selectTShangpinVo">
+        select shangpinId, shangpinName, shangpinMark, shangpinMark1, shangpinMark2, shangpinMark3, shangpinDate, shangpinDate1, shangpinZong, shangpinJin, shangpinXiao, shangpinLirun, shangpinType, shangpinType1, shangpinImg, shangpinImgName, sptypeId, sptypeName, userId, userName, bumenId, bumenName, roleId, roleName from t_shangpin
+    </sql>
+
+    <select id="selectTShangpinList" parameterType="TShangpin" resultMap="TShangpinResult">
+        <include refid="selectTShangpinVo"/>
+        <where>  
+            <if test="shangpinname != null  and shangpinname != ''"> and shangpinName like concat('%', #{shangpinname}, '%')</if>
+            <if test="shangpinmark != null  and shangpinmark != ''"> and shangpinMark = #{shangpinmark}</if>
+            <if test="shangpinmark1 != null  and shangpinmark1 != ''"> and shangpinMark1 = #{shangpinmark1}</if>
+            <if test="shangpinmark2 != null  and shangpinmark2 != ''"> and shangpinMark2 = #{shangpinmark2}</if>
+            <if test="shangpinmark3 != null  and shangpinmark3 != ''"> and shangpinMark3 = #{shangpinmark3}</if>
+            <if test="shangpindate != null "> and shangpinDate = #{shangpindate}</if>
+            <if test="shangpindate1 != null "> and shangpinDate1 = #{shangpindate1}</if>
+            <if test="shangpinzong != null "> and shangpinZong = #{shangpinzong}</if>
+            <if test="shangpinjin != null "> and shangpinJin = #{shangpinjin}</if>
+            <if test="shangpinxiao != null "> and shangpinXiao = #{shangpinxiao}</if>
+            <if test="shangpinlirun != null "> and shangpinLirun = #{shangpinlirun}</if>
+            <if test="shangpintype != null "> and shangpinType = #{shangpintype}</if>
+            <if test="shangpintype1 != null "> and shangpinType1 = #{shangpintype1}</if>
+            <if test="shangpinimg != null  and shangpinimg != ''"> and shangpinImg = #{shangpinimg}</if>
+            <if test="shangpinimgname != null  and shangpinimgname != ''"> and shangpinImgName like concat('%', #{shangpinimgname}, '%')</if>
+            <if test="sptypeid != null "> and sptypeId = #{sptypeid}</if>
+            <if test="sptypename != null  and sptypename != ''"> and sptypeName like concat('%', #{sptypename}, '%')</if>
+            <if test="userid != null "> and userId = #{userid}</if>
+            <if test="username != null  and username != ''"> and userName like concat('%', #{username}, '%')</if>
+            <if test="bumenid != null "> and bumenId = #{bumenid}</if>
+            <if test="bumenname != null  and bumenname != ''"> and bumenName like concat('%', #{bumenname}, '%')</if>
+            <if test="roleid != null "> and roleId = #{roleid}</if>
+            <if test="rolename != null  and rolename != ''"> and roleName like concat('%', #{rolename}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTShangpinByShangpinid" parameterType="Long" resultMap="TShangpinResult">
+        <include refid="selectTShangpinVo"/>
+        where shangpinId = #{shangpinid}
+    </select>
+        
+    <insert id="insertTShangpin" parameterType="TShangpin" useGeneratedKeys="true" keyProperty="shangpinid">
+        insert into t_shangpin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shangpinname != null">shangpinName,</if>
+            <if test="shangpinmark != null">shangpinMark,</if>
+            <if test="shangpinmark1 != null">shangpinMark1,</if>
+            <if test="shangpinmark2 != null">shangpinMark2,</if>
+            <if test="shangpinmark3 != null">shangpinMark3,</if>
+            <if test="shangpindate != null">shangpinDate,</if>
+            <if test="shangpindate1 != null">shangpinDate1,</if>
+            <if test="shangpinzong != null">shangpinZong,</if>
+            <if test="shangpinjin != null">shangpinJin,</if>
+            <if test="shangpinxiao != null">shangpinXiao,</if>
+            <if test="shangpinlirun != null">shangpinLirun,</if>
+            <if test="shangpintype != null">shangpinType,</if>
+            <if test="shangpintype1 != null">shangpinType1,</if>
+            <if test="shangpinimg != null">shangpinImg,</if>
+            <if test="shangpinimgname != null">shangpinImgName,</if>
+            <if test="sptypeid != null">sptypeId,</if>
+            <if test="sptypename != null">sptypeName,</if>
+            <if test="userid != null">userId,</if>
+            <if test="username != null">userName,</if>
+            <if test="bumenid != null">bumenId,</if>
+            <if test="bumenname != null">bumenName,</if>
+            <if test="roleid != null">roleId,</if>
+            <if test="rolename != null">roleName,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shangpinname != null">#{shangpinname},</if>
+            <if test="shangpinmark != null">#{shangpinmark},</if>
+            <if test="shangpinmark1 != null">#{shangpinmark1},</if>
+            <if test="shangpinmark2 != null">#{shangpinmark2},</if>
+            <if test="shangpinmark3 != null">#{shangpinmark3},</if>
+            <if test="shangpindate != null">#{shangpindate},</if>
+            <if test="shangpindate1 != null">#{shangpindate1},</if>
+            <if test="shangpinzong != null">#{shangpinzong},</if>
+            <if test="shangpinjin != null">#{shangpinjin},</if>
+            <if test="shangpinxiao != null">#{shangpinxiao},</if>
+            <if test="shangpinlirun != null">#{shangpinlirun},</if>
+            <if test="shangpintype != null">#{shangpintype},</if>
+            <if test="shangpintype1 != null">#{shangpintype1},</if>
+            <if test="shangpinimg != null">#{shangpinimg},</if>
+            <if test="shangpinimgname != null">#{shangpinimgname},</if>
+            <if test="sptypeid != null">#{sptypeid},</if>
+            <if test="sptypename != null">#{sptypename},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="username != null">#{username},</if>
+            <if test="bumenid != null">#{bumenid},</if>
+            <if test="bumenname != null">#{bumenname},</if>
+            <if test="roleid != null">#{roleid},</if>
+            <if test="rolename != null">#{rolename},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTShangpin" parameterType="TShangpin">
+        update t_shangpin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shangpinname != null">shangpinName = #{shangpinname},</if>
+            <if test="shangpinmark != null">shangpinMark = #{shangpinmark},</if>
+            <if test="shangpinmark1 != null">shangpinMark1 = #{shangpinmark1},</if>
+            <if test="shangpinmark2 != null">shangpinMark2 = #{shangpinmark2},</if>
+            <if test="shangpinmark3 != null">shangpinMark3 = #{shangpinmark3},</if>
+            <if test="shangpindate != null">shangpinDate = #{shangpindate},</if>
+            <if test="shangpindate1 != null">shangpinDate1 = #{shangpindate1},</if>
+            <if test="shangpinzong != null">shangpinZong = #{shangpinzong},</if>
+            <if test="shangpinjin != null">shangpinJin = #{shangpinjin},</if>
+            <if test="shangpinxiao != null">shangpinXiao = #{shangpinxiao},</if>
+            <if test="shangpinlirun != null">shangpinLirun = #{shangpinlirun},</if>
+            <if test="shangpintype != null">shangpinType = #{shangpintype},</if>
+            <if test="shangpintype1 != null">shangpinType1 = #{shangpintype1},</if>
+            <if test="shangpinimg != null">shangpinImg = #{shangpinimg},</if>
+            <if test="shangpinimgname != null">shangpinImgName = #{shangpinimgname},</if>
+            <if test="sptypeid != null">sptypeId = #{sptypeid},</if>
+            <if test="sptypename != null">sptypeName = #{sptypename},</if>
+            <if test="userid != null">userId = #{userid},</if>
+            <if test="username != null">userName = #{username},</if>
+            <if test="bumenid != null">bumenId = #{bumenid},</if>
+            <if test="bumenname != null">bumenName = #{bumenname},</if>
+            <if test="roleid != null">roleId = #{roleid},</if>
+            <if test="rolename != null">roleName = #{rolename},</if>
+        </trim>
+        where shangpinId = #{shangpinid}
+    </update>
+
+    <delete id="deleteTShangpinByShangpinid" parameterType="Long">
+        delete from t_shangpin where shangpinId = #{shangpinid}
+    </delete>
+
+    <delete id="deleteTShangpinByShangpinids" parameterType="String">
+        delete from t_shangpin where shangpinId in 
+        <foreach item="shangpinid" collection="array" open="(" separator="," close=")">
+            #{shangpinid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TRizhiMapper">
+    
+    <resultMap type="TRizhi" id="TRizhiResult">
+        <result property="rizhiid"    column="rizhiId"    />
+        <result property="rizhiname"    column="rizhiName"    />
+        <result property="dengluip"    column="dengluIp"    />
+        <result property="date"    column="date"    />
+    </resultMap>
+
+    <sql id="selectTRizhiVo">
+        select rizhiId, rizhiName, dengluIp, date from t_rizhi
+    </sql>
+
+    <select id="selectTRizhiList" parameterType="TRizhi" resultMap="TRizhiResult">
+        <include refid="selectTRizhiVo"/>
+        <where>  
+            <if test="rizhiname != null  and rizhiname != ''"> and rizhiName like concat('%', #{rizhiname}, '%')</if>
+            <if test="dengluip != null  and dengluip != ''"> and dengluIp = #{dengluip}</if>
+            <if test="date != null "> and date = #{date}</if>
+        </where>
+    </select>
+    
+    <select id="selectTRizhiByRizhiid" parameterType="Long" resultMap="TRizhiResult">
+        <include refid="selectTRizhiVo"/>
+        where rizhiId = #{rizhiid}
+    </select>
+        
+    <insert id="insertTRizhi" parameterType="TRizhi" useGeneratedKeys="true" keyProperty="rizhiid">
+        insert into t_rizhi
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rizhiname != null and rizhiname != ''">rizhiName,</if>
+            <if test="dengluip != null and dengluip != ''">dengluIp,</if>
+            <if test="date != null">date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rizhiname != null and rizhiname != ''">#{rizhiname},</if>
+            <if test="dengluip != null and dengluip != ''">#{dengluip},</if>
+            <if test="date != null">#{date},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTRizhi" parameterType="TRizhi">
+        update t_rizhi
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rizhiname != null and rizhiname != ''">rizhiName = #{rizhiname},</if>
+            <if test="dengluip != null and dengluip != ''">dengluIp = #{dengluip},</if>
+            <if test="date != null">date = #{date},</if>
+        </trim>
+        where rizhiId = #{rizhiid}
+    </update>
+
+    <delete id="deleteTRizhiByRizhiid" parameterType="Long">
+        delete from t_rizhi where rizhiId = #{rizhiid}
+    </delete>
+
+    <delete id="deleteTRizhiByRizhiids" parameterType="String">
+        delete from t_rizhi where rizhiId in 
+        <foreach item="rizhiid" collection="array" open="(" separator="," close=")">
+            #{rizhiid}
+        </foreach>
+    </delete>
+</mapper>

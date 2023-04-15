@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.car.mapper.TUserMapper">
+    
+    <resultMap type="TUser" id="TUserResult">
+        <result property="userid"    column="userId"    />
+        <result property="username"    column="userName"    />
+        <result property="userpassword"    column="userPassword"    />
+        <result property="userxingming"    column="userXingming"    />
+        <result property="usersex"    column="userSex"    />
+        <result property="userage"    column="userAge"    />
+        <result property="userphone"    column="userPhone"    />
+        <result property="usermark1"    column="userMark1"    />
+        <result property="usermark2"    column="userMark2"    />
+        <result property="usermark3"    column="userMark3"    />
+        <result property="usermark4"    column="userMark4"    />
+        <result property="userdate1"    column="userDate1"    />
+        <result property="userdate2"    column="userDate2"    />
+        <result property="usertype1"    column="userType1"    />
+        <result property="usertype2"    column="userType2"    />
+        <result property="userimg"    column="userImg"    />
+        <result property="userimgname"    column="userImgName"    />
+        <result property="roleid"    column="roleId"    />
+        <result property="rolename"    column="roleName"    />
+        <result property="bumenid"    column="bumenId"    />
+        <result property="bumenname"    column="bumenName"    />
+    </resultMap>
+
+    <sql id="selectTUserVo">
+        select userId, userName, userPassword, userXingming, userSex, userAge, userPhone, userMark1, userMark2, userMark3, userMark4, userDate1, userDate2, userType1, userType2, userImg, userImgName, roleId, roleName, bumenId, bumenName from t_user
+    </sql>
+
+    <select id="selectTUserList" parameterType="TUser" resultMap="TUserResult">
+        <include refid="selectTUserVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and userName like concat('%', #{username}, '%')</if>
+            <if test="userpassword != null  and userpassword != ''"> and userPassword = #{userpassword}</if>
+            <if test="userxingming != null  and userxingming != ''"> and userXingming = #{userxingming}</if>
+            <if test="usersex != null "> and userSex = #{usersex}</if>
+            <if test="userage != null "> and userAge = #{userage}</if>
+            <if test="userphone != null  and userphone != ''"> and userPhone = #{userphone}</if>
+            <if test="usermark1 != null  and usermark1 != ''"> and userMark1 = #{usermark1}</if>
+            <if test="usermark2 != null  and usermark2 != ''"> and userMark2 = #{usermark2}</if>
+            <if test="usermark3 != null  and usermark3 != ''"> and userMark3 = #{usermark3}</if>
+            <if test="usermark4 != null  and usermark4 != ''"> and userMark4 = #{usermark4}</if>
+            <if test="userdate1 != null "> and userDate1 = #{userdate1}</if>
+            <if test="userdate2 != null "> and userDate2 = #{userdate2}</if>
+            <if test="usertype1 != null "> and userType1 = #{usertype1}</if>
+            <if test="usertype2 != null "> and userType2 = #{usertype2}</if>
+            <if test="userimg != null  and userimg != ''"> and userImg = #{userimg}</if>
+            <if test="userimgname != null  and userimgname != ''"> and userImgName like concat('%', #{userimgname}, '%')</if>
+            <if test="roleid != null "> and roleId = #{roleid}</if>
+            <if test="rolename != null  and rolename != ''"> and roleName like concat('%', #{rolename}, '%')</if>
+            <if test="bumenid != null "> and bumenId = #{bumenid}</if>
+            <if test="bumenname != null  and bumenname != ''"> and bumenName like concat('%', #{bumenname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTUserByUserid" parameterType="Long" resultMap="TUserResult">
+        <include refid="selectTUserVo"/>
+        where userId = #{userid}
+    </select>
+        
+    <insert id="insertTUser" parameterType="TUser" useGeneratedKeys="true" keyProperty="userid">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">userName,</if>
+            <if test="userpassword != null">userPassword,</if>
+            <if test="userxingming != null">userXingming,</if>
+            <if test="usersex != null">userSex,</if>
+            <if test="userage != null">userAge,</if>
+            <if test="userphone != null">userPhone,</if>
+            <if test="usermark1 != null">userMark1,</if>
+            <if test="usermark2 != null">userMark2,</if>
+            <if test="usermark3 != null">userMark3,</if>
+            <if test="usermark4 != null">userMark4,</if>
+            <if test="userdate1 != null">userDate1,</if>
+            <if test="userdate2 != null">userDate2,</if>
+            <if test="usertype1 != null">userType1,</if>
+            <if test="usertype2 != null">userType2,</if>
+            <if test="userimg != null">userImg,</if>
+            <if test="userimgname != null">userImgName,</if>
+            <if test="roleid != null">roleId,</if>
+            <if test="rolename != null">roleName,</if>
+            <if test="bumenid != null">bumenId,</if>
+            <if test="bumenname != null">bumenName,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},</if>
+            <if test="userpassword != null">#{userpassword},</if>
+            <if test="userxingming != null">#{userxingming},</if>
+            <if test="usersex != null">#{usersex},</if>
+            <if test="userage != null">#{userage},</if>
+            <if test="userphone != null">#{userphone},</if>
+            <if test="usermark1 != null">#{usermark1},</if>
+            <if test="usermark2 != null">#{usermark2},</if>
+            <if test="usermark3 != null">#{usermark3},</if>
+            <if test="usermark4 != null">#{usermark4},</if>
+            <if test="userdate1 != null">#{userdate1},</if>
+            <if test="userdate2 != null">#{userdate2},</if>
+            <if test="usertype1 != null">#{usertype1},</if>
+            <if test="usertype2 != null">#{usertype2},</if>
+            <if test="userimg != null">#{userimg},</if>
+            <if test="userimgname != null">#{userimgname},</if>
+            <if test="roleid != null">#{roleid},</if>
+            <if test="rolename != null">#{rolename},</if>
+            <if test="bumenid != null">#{bumenid},</if>
+            <if test="bumenname != null">#{bumenname},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTUser" parameterType="TUser">
+        update t_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null">userName = #{username},</if>
+            <if test="userpassword != null">userPassword = #{userpassword},</if>
+            <if test="userxingming != null">userXingming = #{userxingming},</if>
+            <if test="usersex != null">userSex = #{usersex},</if>
+            <if test="userage != null">userAge = #{userage},</if>
+            <if test="userphone != null">userPhone = #{userphone},</if>
+            <if test="usermark1 != null">userMark1 = #{usermark1},</if>
+            <if test="usermark2 != null">userMark2 = #{usermark2},</if>
+            <if test="usermark3 != null">userMark3 = #{usermark3},</if>
+            <if test="usermark4 != null">userMark4 = #{usermark4},</if>
+            <if test="userdate1 != null">userDate1 = #{userdate1},</if>
+            <if test="userdate2 != null">userDate2 = #{userdate2},</if>
+            <if test="usertype1 != null">userType1 = #{usertype1},</if>
+            <if test="usertype2 != null">userType2 = #{usertype2},</if>
+            <if test="userimg != null">userImg = #{userimg},</if>
+            <if test="userimgname != null">userImgName = #{userimgname},</if>
+            <if test="roleid != null">roleId = #{roleid},</if>
+            <if test="rolename != null">roleName = #{rolename},</if>
+            <if test="bumenid != null">bumenId = #{bumenid},</if>
+            <if test="bumenname != null">bumenName = #{bumenname},</if>
+        </trim>
+        where userId = #{userid}
+    </update>
+
+    <delete id="deleteTUserByUserid" parameterType="Long">
+        delete from t_user where userId = #{userid}
+    </delete>
+
+    <delete id="deleteTUserByUserids" parameterType="String">
+        delete from t_user where userId in 
+        <foreach item="userid" collection="array" open="(" separator="," close=")">
+            #{userid}
+        </foreach>
+    </delete>
+</mapper>
